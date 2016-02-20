@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def TMDB_API_KEY = '"' + TMDB_API_KEY + '"';
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -16,6 +18,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        buildTypes.each {
+            it.buildConfigField 'String', 'TMDB_API_KEY', TMDB_API_KEY
+        }
+
     }
 }
 
