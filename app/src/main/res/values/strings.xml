@@ -5,4 +5,5 @@
     <string name="release_header_text">"Release: "</string>
     <string name="plot_synopsis_header_text">Plot Synopsis:</string>
     <string name="ratings_header_text">"Ratings: "</string>
+    <string name="sort_by">Sort by</string>
 </resources>

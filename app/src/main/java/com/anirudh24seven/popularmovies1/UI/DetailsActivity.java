@@ -1,4 +1,4 @@
-package com.anirudh24seven.popularmovies1;
+package com.anirudh24seven.popularmovies1.UI;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.anirudh24seven.popularmovies1.Models.Movie;
+import com.anirudh24seven.popularmovies1.R;
 import com.squareup.picasso.Picasso;
 
 public class DetailsActivity extends AppCompatActivity {

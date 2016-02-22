@@ -1,4 +1,4 @@
-package com.anirudh24seven.popularmovies1;
+package com.anirudh24seven.popularmovies1.UI;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,7 +22,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.anirudh24seven.popularmovies1.BuildConfig;
 import com.anirudh24seven.popularmovies1.Models.Movie;
+import com.anirudh24seven.popularmovies1.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private String BASE_URL = "http://api.themoviedb.org/3/";
     public static final String API_KEY = BuildConfig.TMDB_API_KEY;
-    private String moviesApiUrl =  BASE_URL + "discover/movie?sort_by=popularity.desc&api_key=" + API_KEY;
+    private String moviesApiUrl =  BASE_URL + "discover/movie";
 
     private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/" + "w185/";
 
@@ -46,15 +51,46 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        movieResultList = new ArrayList<>();
         gridView = (GridView) findViewById(R.id.movies_grid);
 
-        fetchMovies();
+        fetchMovies(true);
     }
 
-    private void fetchMovies() {
-        JsonObjectRequest request = new JsonObjectRequest(moviesApiUrl, null, new Response.Listener<JSONObject>() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(this).inflate(R.menu.main_menu, menu);
+        return (super.onCreateOptionsMenu(menu));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuSort:
+                return super.onOptionsItemSelected(item);
+            case R.id.menuSortPopular:
+                fetchMovies(true);
+                return true;
+            case R.id.menuSortRating:
+                fetchMovies(false);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void fetchMovies(boolean isMostPopularSelected) {
+        String url = moviesApiUrl;
+
+        if(isMostPopularSelected) {
+            url += "?sort_by=popularity.desc&api_key=" + API_KEY;
+        }
+        else {
+            url += "?sort_by=vote_average.desc&api_key=" + API_KEY;
+        }
+
+        movieResultList = new ArrayList<>();
+
+        JsonObjectRequest request = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
