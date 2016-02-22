@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Popular Movies 1</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="str_movie_image">Movie Image</string>
+    <string name="release_header_text">"Release: "</string>
+    <string name="plot_synopsis_header_text">Plot Synopsis:</string>
+    <string name="ratings_header_text">"Ratings: "</string>
 </resources>
